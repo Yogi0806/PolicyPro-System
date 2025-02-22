@@ -1,0 +1,162 @@
+✅ Steps to Test Your API in Postman
+Follow these steps to test your Spring Boot API in Postman.
+
+1️⃣ Open Postman
+Download and install Postman if you haven't: Download Postman.
+Open Postman and ensure your Spring Boot server is running at http://localhost:8080/.
+2️⃣ Test API Endpoints
+📌 1. Insert Claim (POST)
+Steps
+Open Postman
+Select POST method
+Enter URL:
+bash
+Copy
+Edit
+http://localhost:8080/api/saveClaim/123
+Click on Body → Select raw → Choose JSON
+Enter this JSON request:
+json
+Copy
+Edit
+{
+  "claimAmount": 5000,
+  "claimStatus": "Pending",
+  "claimDate": "2025-02-17"
+}
+Click Send
+✅ Expected Response (201 Created)
+
+json
+Copy
+Edit
+{
+  "status": "success",
+  "message": "Claim inserted successfully",
+  "data": {
+    "claimId": 1,
+    "claimAmount": 5000,
+    "claimStatus": "Pending",
+    "claimDate": "2025-02-17"
+  }
+}
+📌 2. Get Claim by ID (GET)
+Steps
+Select GET method
+Enter URL:
+bash
+Copy
+Edit
+http://localhost:8080/api/getByClaimId/1
+Click Send
+✅ Expected Response (200 OK)
+
+json
+Copy
+Edit
+{
+  "status": "success",
+  "message": "Claim found",
+  "data": {
+    "claimId": 1,
+    "claimAmount": 5000,
+    "claimStatus": "Pending",
+    "claimDate": "2025-02-17"
+  }
+}
+📌 3. Update Claim (PUT)
+Steps
+Select PUT method
+Enter URL:
+bash
+Copy
+Edit
+http://localhost:8080/api/updateClaim/1
+Click on Body → Select raw → Choose JSON
+Enter this JSON request:
+json
+Copy
+Edit
+{
+  "claimAmount": 6000,
+  "claimStatus": "Approved"
+}
+Click Send
+✅ Expected Response (200 OK)
+
+json
+Copy
+Edit
+{
+  "status": "success",
+  "message": "Claim updated successfully",
+  "data": {
+    "claimId": 1,
+    "claimAmount": 6000,
+    "claimStatus": "Approved"
+  }
+}
+📌 4. Delete Claim (DELETE)
+Steps
+Select DELETE method
+Enter URL:
+bash
+Copy
+Edit
+http://localhost:8080/api/deleteClaim/1
+Click Send
+✅ Expected Response (200 OK)
+
+json
+Copy
+Edit
+{
+  "status": "success",
+  "message": "Claim deleted successfully"
+}
+📌 5. Get All Claims (GET)
+Steps
+Select GET method
+Enter URL:
+bash
+Copy
+Edit
+http://localhost:8080/api/displayAllClaim
+Click Send
+✅ Expected Response (200 OK, if data exists)
+
+json
+Copy
+Edit
+{
+  "status": "success",
+  "message": "All claims retrieved",
+  "data": [
+    {
+      "claimId": 1,
+      "claimAmount": 6000,
+      "claimStatus": "Approved"
+    },
+    {
+      "claimId": 2,
+      "claimAmount": 4000,
+      "claimStatus": "Pending"
+    }
+  ]
+}
+3️⃣ Common Errors & Fixes
+❌ Error	✅ Solution
+404 Not Found	Check URL (e.g., /api/getByClaimId/1 should not be /api/getClaim).
+500 Internal Server Error	Check logs in IntelliJ/Eclipse for missing fields or database issues.
+Table ‘claims’ doesn’t exist	Ensure Hibernate creates the table (spring.jpa.hibernate.ddl-auto=update).
+415 Unsupported Media Type	Ensure you select raw JSON in Postman Body.
+400 Bad Request	Ensure JSON syntax is correct.
+Final Step: Restart Your Server & Retest
+If you face issues, restart the Spring Boot application and test again.
+
+sh
+Copy
+Edit
+mvn clean install && mvn spring-boot:run
+Now, test all APIs in Postman again. 🚀 Let me know if any issues remain!
+
